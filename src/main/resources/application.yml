@@ -1,0 +1,23 @@
+camel:
+  batch:
+    timeout: 100
+    max:
+      records: 100
+  springboot:
+    main-run-controller: true
+
+noop:
+  flag: true
+inputPath: file:/Users/v4u2chat/Dev/data/inbox
+outputPath: file:/Users/v4u2chat/Dev/data/outbox
+
+dbRoute1: jdbc:dataSource
+sqlInsertStmt: INSERT INTO `SalesRecord` (`region`, `country`, `itemType`, `salesChannel`, `orderPriority`, `orderDate`, `orderld`, `shipDate`, `unitSold`, `unitPrice`, `unitCost`, `totalRevenue`, `totalCost`, `totalProfit`) VALUES (:#Region,:#Country,:#ItemType,:#SalesChannel,:#OrderPriority,:#OrderDate,:#OrderID,:#ShipDate,:#UnitsSold,:#UnitPrice,:#UnitCost,:#TotalRevenue,:#TotalCost,:#TotalProfit)
+
+spring:
+  dataSource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ags-data-staging
+    username: root
+    password: mysql#123
+    jdbc-url: jdbc:mysql://localhost:3306/ags-data-staging
