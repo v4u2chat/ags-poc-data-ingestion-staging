@@ -12,7 +12,8 @@ inputPath: file:/Users/v4u2chat/Dev/data/inbox
 outputPath: file:/Users/v4u2chat/Dev/data/outbox
 
 dbRoute1: jdbc:dataSource
-sqlInsertStmt: INSERT INTO `SalesRecord` (`region`, `country`, `itemType`, `salesChannel`, `orderPriority`, `orderDate`, `orderld`, `shipDate`, `unitSold`, `unitPrice`, `unitCost`, `totalRevenue`, `totalCost`, `totalProfit`) VALUES (:#Region,:#Country,:#ItemType,:#SalesChannel,:#OrderPriority,:#OrderDate,:#OrderID,:#ShipDate,:#UnitsSold,:#UnitPrice,:#UnitCost,:#TotalRevenue,:#TotalCost,:#TotalProfit)
+#sqlInsertStmt: INSERT INTO `SalesRecord` (`region`, `country`, `itemType`, `salesChannel`, `orderPriority`, `orderDate`, `orderld`, `shipDate`, `unitSold`, `unitPrice`, `unitCost`, `totalRevenue`, `totalCost`, `totalProfit`) VALUES (:#Region,:#Country,:#ItemType,:#SalesChannel,:#OrderPriority,:#OrderDate,:#OrderID,:#ShipDate,:#UnitsSold,:#UnitPrice,:#UnitCost,:#TotalRevenue,:#TotalCost,:#TotalProfit)
+sqlInsertStmt: INSERT INTO `CompaignData` (`SOURCE_ACCOUNT_NBR`, `PRODUCT_CODE`, `MAX_DISPLAY_COUNT`, `UPLOAD_DATE`, `DELETE_DATE`, `CAMPAIGN_TYPE`, `MESSAGE1`, `MESSAGE2`, `MESSAGE3`, `MESSAGE4`, `PRIORITY`, `ACTION`,`SOURCE_ACCOUNT_NBR_MD5`) VALUES (:#SOURCE_ACCOUNT_NBR, :#PRODUCT_CODE, :#MAX_DISPLAY_COUNT, STR_TO_DATE(:#UPLOAD_DATE,'%d/%m/%Y'),STR_TO_DATE(:#DELETE_DATE,'%d/%m/%Y'), :#CAMPAIGN_TYPE, :#MESSAGE1, :#MESSAGE2, :#MESSAGE3, :#MESSAGE4, :#PRIORITY, :#ACTION, MD5(:#SOURCE_ACCOUNT_NBR));
 
 spring:
   dataSource:
@@ -21,3 +22,25 @@ spring:
     username: root
     password: mysql#123
     jdbc-url: jdbc:mysql://localhost:3306/ags-data-staging
+
+ignite:
+  igniteInstanceName: ags-campaign-data
+  communicationSpi:
+    localPort: 5555
+  dataStorageConfiguration:
+    defaultDataRegionConfiguration:
+      initialSize: 10485760 #10MB
+    dataRegionConfigurations:
+      - name: my-dataregion
+        initialSize: 104857600 #100MB
+  cacheConfiguration:
+    - name: accounts
+      queryEntities:
+      - tableName: ACCOUNTS
+        keyFieldName: ID
+        keyType: java.lang.Long
+        valueType: java.lang.Object
+        fields:
+          ID: java.lang.Long
+          amount: java.lang.Double
+          updateDate: java.util.Date

@@ -13,10 +13,11 @@
 	<name>data-ingestion-staging</name>
 	<description>To load Campaign Data</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>15</java.version>
 		<camel.version>3.11.1</camel.version>
 	</properties>
 	<dependencies>
+
 
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
@@ -45,19 +46,82 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-rest-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-rest-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jetty</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-gson-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-ignite-starter</artifactId>
+			<version>${camel.version}</version>
+		</dependency> -->
+
+		<!-- <dependency>
+			<groupId>org.apache.ignite</groupId>
+			<artifactId>ignite-spring-boot-autoconfigure-ext</artifactId>
+			<version>1.0.0</version>
+		</dependency> -->
+
+
+		<!-- <dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-chronicle</artifactId>
+			<version>2.25.4</version>
+		</dependency> -->
+		<!-- <dependency>
+			<groupId>net.openhft</groupId>
+			<artifactId>chronicle-map</artifactId>
+			<version>3.22ea2</version>
+		</dependency> -->
+
+
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-batch</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jdbc</artifactId>
-		</dependency>
+		</dependency>-->
+
+
+		<!-- <dependency>
+			<groupId>net.openhft</groupId>
+			<artifactId>chronicle-bytes</artifactId>
+			<version>2.22ea1</version>
+		</dependency> -->
+
+		<!-- <dependency>
+			<groupId>net.openhft</groupId>
+			<artifactId>chronicle-map</artifactId>
+			<version>3.20.84.1</version>
+		</dependency> -->
 
 
 		<dependency>
