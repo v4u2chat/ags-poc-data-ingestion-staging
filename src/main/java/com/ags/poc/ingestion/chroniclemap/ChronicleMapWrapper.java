@@ -1,11 +1,11 @@
 package com.ags.poc.ingestion.chroniclemap;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.UUID;
+
+import net.openhft.chronicle.map.ChronicleMap;
 
 public class ChronicleMapWrapper {
     
@@ -20,34 +20,53 @@ public class ChronicleMapWrapper {
     }
 
     private boolean isInit = false;
-    private Map<String,List<CampaignDataInfo>> pMap;
-
+    private ChronicleMap<String,List> pMap;
     public synchronized void init(){
         if (isInit) return;
         try {
 
-            pMap = new ConcurrentHashMap<>();
-            // pMap = ChronicleMap
-            //         .of(String.class, Queue.class).name("simple-pstore")
-            //         .entries(10_000_000)
-            //         .averageKey(UUID.randomUUID().toString())
-            //         .createOrRecoverPersistedTo(new File(System.getProperty("user.home") + "/ags-campaign-data-map.dat"));
-            // Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            //     @Override
-            //     public void run() {
-            //         pMap.close();
-            //     }
-            // }));
+            pMap = ChronicleMap
+                    .of(String.class, List.class).name("ags-campaign-data-map")
+                    .entries(10_00_00_000)  //  10 Crores || Hundred Million
+                    .averageKey("1234123412341234")
+                    .averageValue(createDummyList())
+                    .createOrRecoverPersistedTo(new File(System.getProperty("user.home") + "/ags-campaign-data-map.dat"));
+                    
+            Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    pMap.close();
+                }
+            }));
             isInit = true;
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+    private List<CampaignDataInfo> createDummyList() {
+        CampaignDataInfo campaignDataInfo = new CampaignDataInfo();
+        campaignDataInfo.setCampaignType("campaignType");
+        campaignDataInfo.setMessage1("message1message1message1message1message1message1message1message1message1message1message1message1message1");
+        campaignDataInfo.setMessage2("message1message1message1message1message1message1message1message1message1message1message1message1message1");
+        campaignDataInfo.setMessage3("message1message1message1message1message1message1message1message1message1message1message1message1message1");
+        campaignDataInfo.setMessage4("message1message1message1message1message1message1message1message1message1message1message1message1message1");
+        campaignDataInfo.setPriority(9);
+        campaignDataInfo.setVisitedCount(9);
+
+        List<CampaignDataInfo> dumCampaignDataInfos = new ArrayList<>();
+        dumCampaignDataInfos.add(campaignDataInfo);
+        dumCampaignDataInfos.add(campaignDataInfo);
+        dumCampaignDataInfos.add(campaignDataInfo);
+        dumCampaignDataInfos.add(campaignDataInfo);
+        dumCampaignDataInfos.add(campaignDataInfo);
+        return dumCampaignDataInfos;
+    }
 
 
-    // public void close(){
-    //     pMap.close();
-    // }
+    public void close(){
+        pMap.close();
+        // pMap = null;
+    }
 
 
     public List<CampaignDataInfo> getCampaignDataInfo(final String key){
@@ -55,7 +74,6 @@ public class ChronicleMapWrapper {
     }
 
     public void addElement(final String key , final CampaignDataInfo campaignDataInfo){
-        System.out.println(key +"-----------------"+campaignDataInfo);
         List<CampaignDataInfo> campaignDataInfos = pMap.get(key) == null ? new ArrayList<CampaignDataInfo>() : pMap.get(key);
         campaignDataInfos.add(campaignDataInfo);
         pMap.put(key,campaignDataInfos);

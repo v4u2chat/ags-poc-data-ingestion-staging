@@ -17,8 +17,6 @@ public class ChronicleMapUpdateTask implements Callable<CampaignDataInfo>{
     {
         CampaignDataInfo campaignDataInfo = buildCampaignInfoObject();
         chronicleMapWrapper.addElement(campaignDataInfoPayload.get("SOURCE_ACCOUNT_NBR"), campaignDataInfo);
-
-        System.out.println("\n\n\n chronicleMapWrapper size "+ chronicleMapWrapper.size() + " \t\t "+chronicleMapWrapper.getVal(campaignDataInfoPayload.get("SOURCE_ACCOUNT_NBR")));
         return campaignDataInfo;
     }
 

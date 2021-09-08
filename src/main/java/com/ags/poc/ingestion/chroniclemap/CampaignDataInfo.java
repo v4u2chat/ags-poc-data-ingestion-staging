@@ -1,8 +1,11 @@
 package com.ags.poc.ingestion.chroniclemap;
 
-public class CampaignDataInfo {
+import java.io.Serializable;
+
+public class CampaignDataInfo implements Serializable{
 
     private int priority;
+    private int maxVisitCount;
     private int visitedCount;
     private String campaignType;
     private String message1;
@@ -66,7 +69,13 @@ public class CampaignDataInfo {
         this.message4 = message4;
     }
 
-   
+    public int getMaxVisitCount() {
+        return maxVisitCount;
+    }
+
+    public void setMaxVisitCount(int maxVisitCount) {
+        this.maxVisitCount = maxVisitCount;
+    }
 
     @Override
     public String toString() {
@@ -76,7 +85,6 @@ public class CampaignDataInfo {
     }
 
     public int compareTo(CampaignDataInfo b) {
-        System.out.println("compareTocompareTocompareTocompareTocompareTocompareTo  >> \t\t :  " +(this.priority+""+this.visitedCount).compareTo(b.priority+""+b.visitedCount));
         return (this.priority+""+this.visitedCount).compareTo(b.priority+""+b.visitedCount);
     }
 

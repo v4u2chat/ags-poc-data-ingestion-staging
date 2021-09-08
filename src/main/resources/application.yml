@@ -13,11 +13,11 @@ outputPath: file:/Users/v4u2chat/Dev/data/outbox
 
 dbRoute1: jdbc:dataSource
 #sqlInsertStmt: INSERT INTO `SalesRecord` (`region`, `country`, `itemType`, `salesChannel`, `orderPriority`, `orderDate`, `orderld`, `shipDate`, `unitSold`, `unitPrice`, `unitCost`, `totalRevenue`, `totalCost`, `totalProfit`) VALUES (:#Region,:#Country,:#ItemType,:#SalesChannel,:#OrderPriority,:#OrderDate,:#OrderID,:#ShipDate,:#UnitsSold,:#UnitPrice,:#UnitCost,:#TotalRevenue,:#TotalCost,:#TotalProfit)
-sqlInsertStmt: INSERT INTO `CompaignData` (`SOURCE_ACCOUNT_NBR`, `PRODUCT_CODE`, `MAX_DISPLAY_COUNT`, `UPLOAD_DATE`, `DELETE_DATE`, `CAMPAIGN_TYPE`, `MESSAGE1`, `MESSAGE2`, `MESSAGE3`, `MESSAGE4`, `PRIORITY`, `ACTION`,`SOURCE_ACCOUNT_NBR_MD5`) VALUES (:#SOURCE_ACCOUNT_NBR, :#PRODUCT_CODE, :#MAX_DISPLAY_COUNT, STR_TO_DATE(:#UPLOAD_DATE,'%d/%m/%Y'),STR_TO_DATE(:#DELETE_DATE,'%d/%m/%Y'), :#CAMPAIGN_TYPE, :#MESSAGE1, :#MESSAGE2, :#MESSAGE3, :#MESSAGE4, :#PRIORITY, :#ACTION, MD5(:#SOURCE_ACCOUNT_NBR));
+sqlInsertStmt: INSERT INTO `CompaignData` (`SOURCE_ACCOUNT_NBR`, `PRODUCT_CODE`, `MAX_DISPLAY_COUNT`, `UPLOAD_DATE`, `DELETE_DATE`, `CAMPAIGN_TYPE`, `MESSAGE1`, `MESSAGE2`, `MESSAGE3`, `MESSAGE4`, `PRIORITY`, `ACTION`,`SOURCE_ACCOUNT_NBR_MD5`) VALUES (:#SOURCE_ACCOUNT_NBR, :#PRODUCT_CODE, :#MAX_DISPLAY_COUNT, STR_TO_DATE(:#UPLOAD_DATE,'%d-%m-%Y'),STR_TO_DATE(:#DELETE_DATE,'%d-%m-%Y'), :#CAMPAIGN_TYPE, :#MESSAGE1, :#MESSAGE2, :#MESSAGE3, :#MESSAGE4, :#PRIORITY, :#ACTION, MD5(:#SOURCE_ACCOUNT_NBR));
 
 spring:
   dataSource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver #com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ags-data-staging
     username: root
     password: mysql#123

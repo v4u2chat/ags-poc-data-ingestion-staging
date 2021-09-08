@@ -13,12 +13,12 @@
 	<name>data-ingestion-staging</name>
 	<description>To load Campaign Data</description>
 	<properties>
-		<java.version>15</java.version>
+		<java.version>1.8</java.version>
 		<camel.version>3.11.1</camel.version>
+		<ignite.version>2.10.0</ignite.version>
+		<h2.version>1.4.197</h2.version>
 	</properties>
 	<dependencies>
-
-
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-spring-boot-starter</artifactId>
@@ -71,7 +71,13 @@
 
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-jetty</artifactId>
+			<artifactId>camel-undertow</artifactId>
+			<version>${camel.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
 
@@ -80,48 +86,12 @@
 			<artifactId>camel-gson-starter</artifactId>
 			<version>${camel.version}</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.apache.camel.springboot</groupId>
-			<artifactId>camel-ignite-starter</artifactId>
-			<version>${camel.version}</version>
-		</dependency> -->
 
-		<!-- <dependency>
-			<groupId>org.apache.ignite</groupId>
-			<artifactId>ignite-spring-boot-autoconfigure-ext</artifactId>
-			<version>1.0.0</version>
-		</dependency> -->
-
-
-		<!-- <dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-chronicle</artifactId>
-			<version>2.25.4</version>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>net.openhft</groupId>
-			<artifactId>chronicle-map</artifactId>
-			<version>3.22ea2</version>
-		</dependency> -->
-
-
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-batch</artifactId>
-		</dependency>-->
-
-
-		<!-- <dependency>
-			<groupId>net.openhft</groupId>
-			<artifactId>chronicle-bytes</artifactId>
-			<version>2.22ea1</version>
-		</dependency> -->
-
-		<!-- <dependency>
+		<dependency>
 			<groupId>net.openhft</groupId>
 			<artifactId>chronicle-map</artifactId>
 			<version>3.20.84.1</version>
-		</dependency> -->
+		</dependency>
 
 
 		<dependency>
@@ -136,6 +106,10 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
