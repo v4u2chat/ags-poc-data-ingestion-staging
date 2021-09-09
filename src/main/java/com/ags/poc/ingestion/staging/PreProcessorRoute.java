@@ -1,11 +1,9 @@
 package com.ags.poc.ingestion.staging;
 
 import com.ags.poc.ingestion.chroniclemap.BuildChronicleMapProcessor;
-import com.ags.poc.ingestion.chroniclemap.CampaignService;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +14,9 @@ public class PreProcessorRoute extends RouteBuilder{
     @Autowired
     private BuildChronicleMapProcessor buildChronicleMapProcessor;
 
-    @Autowired
-    private CampaignService campaignService;
-
     @Override
     public void configure() throws Exception {
 
-
-        restConfiguration().component("undertow").host("localhost").port(8080).bindingMode(RestBindingMode.json);
-        rest("/api/camapign")
-                .get("/?nbr={nbr}").produces("application/json").to("bean:campaignService?method=getCampaignDataInfo(${header.nbr})")
-        ;
-
-     
         CsvDataFormat csvDataFormat = new CsvDataFormat()
                 .setLazyLoad(true)
                 .setUseMaps(true)

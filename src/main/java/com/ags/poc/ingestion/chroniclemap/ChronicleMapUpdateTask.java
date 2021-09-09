@@ -28,6 +28,7 @@ public class ChronicleMapUpdateTask implements Callable<CampaignDataInfo>{
         campaignDataInfo.setMessage3(campaignDataInfoPayload.get("MESSAGE3"));
         campaignDataInfo.setMessage4(campaignDataInfoPayload.get("MESSAGE4"));
         campaignDataInfo.setPriority(Integer.parseInt(campaignDataInfoPayload.get("PRIORITY")));
+        campaignDataInfo.setMaxVisitCount(Integer.parseInt(campaignDataInfoPayload.get("MAX_DISPLAY_COUNT")));
         campaignDataInfo.setVisitedCount(0);
         return campaignDataInfo;
     }

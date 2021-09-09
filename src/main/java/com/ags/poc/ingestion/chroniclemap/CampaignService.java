@@ -3,6 +3,8 @@ package com.ags.poc.ingestion.chroniclemap;
 import java.util.Collections;
 import java.util.List;
 
+import com.ags.poc.ingestion.utils.PocUtils;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,15 +15,20 @@ public class CampaignService {
     public CampaignDataInfo getCampaignDataInfo(String key){
         System.out.println("CampaignService >> key >> "+key);
 
-        
-
         List<CampaignDataInfo> campaignDataInfos = chronicleMapWrapper.getCampaignDataInfo(key);
         if(campaignDataInfos!=null){
             Collections.sort(campaignDataInfos,new CampaignDataComparator());
             CampaignDataInfo campaignDataInfo = campaignDataInfos.get(0);
-            campaignDataInfo.incrementVisitedCount();
-            return campaignDataInfo;
+            campaignDataInfos.remove(0);
+
+            if(campaignDataInfo.getMaxVisitCount()>campaignDataInfo.getVisitedCount()){
+                System.out.println("B4 incremet >>"+campaignDataInfo);
+                campaignDataInfo.incrementVisitedCount();
+                chronicleMapWrapper.addElement(key, campaignDataInfo);
+                System.out.println("aftr incremet >>"+campaignDataInfo);
+                return campaignDataInfo;
+            }
         }
-        return null;
+        return PocUtils.createDummyCampaignInfo();
     }
 }
