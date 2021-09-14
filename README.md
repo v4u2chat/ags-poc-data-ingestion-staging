@@ -2,7 +2,10 @@
 
 - Data Ingestion Using Apache Camel
 - Pre-Process and build Chronicle Map for caching and processing
-- Jetty Rest End Point to verify the logic
+- Jetty | Undertow Containers for Rest End Pointd
+  - Low memory footprint
+  - NIO & No Blocking (Event Loop Arch)
+  - Quick boostrap time
 
 ![image](https://user-images.githubusercontent.com/5463838/132727197-1fe6361c-a68d-4a77-8f0f-4b314a1486c9.png)
 
