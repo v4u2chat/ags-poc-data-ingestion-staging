@@ -22,10 +22,8 @@ public class CampaignService {
             campaignDataInfos.remove(0);
 
             if(campaignDataInfo.getMaxVisitCount()>campaignDataInfo.getVisitedCount()){
-                System.out.println("B4 incremet >>"+campaignDataInfo);
                 campaignDataInfo.incrementVisitedCount();
                 chronicleMapWrapper.addElement(key, campaignDataInfo);
-                System.out.println("aftr incremet >>"+campaignDataInfo);
                 return campaignDataInfo;
             }
         }
