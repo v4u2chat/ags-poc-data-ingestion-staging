@@ -5,6 +5,7 @@
   -  Executor Pool to ingest the data to Chronicle Map | Database
 - Pre-Process and build [Chronicle Map](https://github.com/OpenHFT/Chronicle-Map) for caching
   -   Off heap Map for caching considering the volume of data to be cached
+  -   [Tutorial](https://github.com/OpenHFT/Chronicle-Map/blob/ea/docs/CM_Tutorial.adoc)
   -   [Chronicle Map features](https://github.com/OpenHFT/Chronicle-Map/blob/ea/docs/CM_Features.adoc)
 - Jetty | Undertow Containers for Rest End Points
   - Low memory footprint
