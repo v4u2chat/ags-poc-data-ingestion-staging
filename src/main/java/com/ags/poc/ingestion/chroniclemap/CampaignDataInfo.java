@@ -2,16 +2,25 @@ package com.ags.poc.ingestion.chroniclemap;
 
 import java.io.Serializable;
 
-public class CampaignDataInfo implements Serializable{
+public class CampaignDataInfo implements Serializable {
 
     private int priority;
     private int maxVisitCount;
     private int visitedCount;
+    private String nbr;
     private String campaignType;
     private String message1;
     private String message2;
     private String message3;
     private String message4;
+
+    public String getNbr() {
+        return nbr;
+    }
+
+    public void setNbr(String nbr) {
+        this.nbr = nbr;
+    }
 
     public int getPriority() {
         return priority;
@@ -79,16 +88,44 @@ public class CampaignDataInfo implements Serializable{
 
     @Override
     public String toString() {
-        return "CampaignDataInfo [campaignType=" + campaignType + ", message1=" + message1 + ", message2=" + message2
-                + ", message3=" + message3 + ", message4=" + message4 + ", priority=" + priority + ", visitedCount="
-                + visitedCount + "]";
+        return "CampaignDataInfo [campaignType=" + campaignType + ", priority=" + priority + ", nbr=" + nbr
+                + ", maxVisitCount=" + maxVisitCount + ", visitedCount=" + visitedCount + ", message1=" + message1
+                + ", message2=" + message2 + ", message3=" + message3 + ", message4=" + message4 + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((campaignType == null) ? 0 : campaignType.hashCode());
+        result = prime * result + priority;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CampaignDataInfo other = (CampaignDataInfo) obj;
+        if (campaignType == null) {
+            if (other.campaignType != null)
+                return false;
+        } else if (!campaignType.equals(other.campaignType))
+            return false;
+        if (priority != other.priority)
+            return false;
+        return true;
     }
 
     public int compareTo(CampaignDataInfo b) {
-        return (this.priority+""+this.visitedCount).compareTo(b.priority+""+b.visitedCount);
+        return new Integer(this.getPriority()).compareTo(new Integer(b.getPriority()));
     }
 
-    public void incrementVisitedCount(){
+    public void incrementVisitedCount() {
         this.visitedCount++;
     }
 

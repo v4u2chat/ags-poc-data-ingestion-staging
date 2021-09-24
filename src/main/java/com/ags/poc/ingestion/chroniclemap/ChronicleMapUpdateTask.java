@@ -22,7 +22,8 @@ public class ChronicleMapUpdateTask implements Callable<CampaignDataInfo>{
 
     private CampaignDataInfo buildCampaignInfoObject() {
         CampaignDataInfo campaignDataInfo = new CampaignDataInfo();
-        campaignDataInfo.setCampaignType(campaignDataInfoPayload.get("SOURCE_ACCOUNT_NBR"));
+        campaignDataInfo.setNbr(campaignDataInfoPayload.get("SOURCE_ACCOUNT_NBR"));
+        campaignDataInfo.setCampaignType(campaignDataInfoPayload.get("PRODUCT_CODE"));
         campaignDataInfo.setMessage1(campaignDataInfoPayload.get("MESSAGE1"));
         campaignDataInfo.setMessage2(campaignDataInfoPayload.get("MESSAGE2"));
         campaignDataInfo.setMessage3(campaignDataInfoPayload.get("MESSAGE3"));

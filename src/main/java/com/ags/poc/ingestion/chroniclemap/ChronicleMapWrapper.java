@@ -28,7 +28,7 @@ public class ChronicleMapWrapper {
 
             pMap = ChronicleMap
                     .of(String.class, List.class).name("ags-campaign-data-map")
-                    .entries(10_00_00_000)  //  10 Crores || Hundred Million
+                    .entries(10_000)  //  10 Crores || Hundred Million
                     .averageKey("1234123412341234")
                     .averageValue(createDummyList())
                     .createOrRecoverPersistedTo(new File(System.getProperty("user.home") + "/ags-campaign-data-map.dat"));
@@ -59,7 +59,6 @@ public class ChronicleMapWrapper {
 
     public void close(){
         pMap.close();
-        // pMap = null;
     }
 
 
@@ -69,10 +68,21 @@ public class ChronicleMapWrapper {
 
     public void addElement(final String key , final CampaignDataInfo campaignDataInfo){
         List<CampaignDataInfo> campaignDataInfos = pMap.get(key) == null ? new ArrayList<CampaignDataInfo>() : pMap.get(key);
-        campaignDataInfos.add(campaignDataInfo);
+
+        for(CampaignDataInfo campaignDataInfo2 : campaignDataInfos){
+            if(campaignDataInfo2.getCampaignType().equals(campaignDataInfo.getCampaignType())){
+                campaignDataInfos.remove(campaignDataInfo2);
+                campaignDataInfo.incrementVisitedCount();
+                break;
+            }
+        }
+        if(campaignDataInfo.getMaxVisitCount()>campaignDataInfo.getVisitedCount()){
+            campaignDataInfos.add(campaignDataInfo);
+        }
+        
         pMap.put(key,campaignDataInfos);
 
-        System.out.println("Added "+campaignDataInfo +" to "+ key);
+        System.out.println("Added "+ campaignDataInfo.getCampaignType()+ " >> "+campaignDataInfos.size() +" to "+ campaignDataInfos);
     }
 
     public boolean exists(final String key){

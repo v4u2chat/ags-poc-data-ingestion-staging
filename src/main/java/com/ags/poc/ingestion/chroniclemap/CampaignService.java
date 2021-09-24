@@ -13,16 +13,17 @@ public class CampaignService {
     ChronicleMapWrapper chronicleMapWrapper = ChronicleMapWrapper.getInstance();
     
     public CampaignDataInfo getCampaignDataInfo(String key){
-        System.out.println("CampaignService >> key >> "+key);
+        
 
         List<CampaignDataInfo> campaignDataInfos = chronicleMapWrapper.getCampaignDataInfo(key);
-        if(campaignDataInfos!=null){
+        if(campaignDataInfos!=null && campaignDataInfos.size()>0){
+
             Collections.sort(campaignDataInfos,new CampaignDataComparator());
             CampaignDataInfo campaignDataInfo = campaignDataInfos.get(0);
-            campaignDataInfos.remove(0);
 
-            if(campaignDataInfo.getMaxVisitCount()>campaignDataInfo.getVisitedCount()){
-                campaignDataInfo.incrementVisitedCount();
+            System.out.println("CampaignService >> key >> "+key+ "\t >> "+campaignDataInfo);
+
+            if(campaignDataInfo.getMaxVisitCount()>=campaignDataInfo.getVisitedCount()){
                 chronicleMapWrapper.addElement(key, campaignDataInfo);
                 return campaignDataInfo;
             }
