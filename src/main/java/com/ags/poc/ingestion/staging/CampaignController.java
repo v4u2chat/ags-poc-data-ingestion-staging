@@ -1,7 +1,7 @@
 package com.ags.poc.ingestion.staging;
 
-import com.ags.poc.ingestion.chroniclemap.CampaignService;
 import com.ags.poc.ingestion.entities.CampaignDataInfo;
+import com.ags.poc.ingestion.services.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

@@ -3,6 +3,8 @@ package com.ags.poc.ingestion.chroniclemap;
 import com.ags.poc.ingestion.entities.CampaignDataInfo;
 import com.ags.poc.ingestion.utils.PocUtils;
 import net.openhft.chronicle.map.ChronicleMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChronicleMapWrapper {
-    
+    private final Logger logger = LoggerFactory.getLogger(ChronicleMapWrapper.class);
     private static final ChronicleMapWrapper ourInstance = new ChronicleMapWrapper();
 
     public static synchronized ChronicleMapWrapper getInstance() {
@@ -98,7 +100,7 @@ public class ChronicleMapWrapper {
 
         this.pMap.put(key,campaignDataInfos);
 
-        System.out.println("Added "+ campaignDataInfo.getCampaignType()+ " >> "+campaignDataInfos.size() +" to "+ campaignDataInfos);
+        this.logger.info("Added "+ campaignDataInfo.getCampaignType()+ " >> "+campaignDataInfos.size() +" to "+ campaignDataInfos);
     }
 
     public boolean exists(final String key){

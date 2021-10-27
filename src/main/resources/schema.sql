@@ -1,5 +1,5 @@
 CREATE TABLE `ags-data-poc`.`campaigndata` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` varchar(45) NOT NULL,
   `SOURCE_ACCOUNT_NBR` varchar(45) DEFAULT NULL,
   `PRODUCT_CODE` varchar(45) DEFAULT NULL,
   `MAX_DISPLAY_COUNT` int(11) DEFAULT 0,

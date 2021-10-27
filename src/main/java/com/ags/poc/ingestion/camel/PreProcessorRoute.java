@@ -1,6 +1,5 @@
-package com.ags.poc.ingestion.staging;
+package com.ags.poc.ingestion.camel;
 
-import com.ags.poc.ingestion.chroniclemap.BuildChronicleMapProcessor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.dataformat.csv.CsvDataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PreProcessorRoute extends RouteBuilder{
+
+    @Autowired
+    private AddUuidProcessor addUuidProcessor;
 
     @Autowired
     private BuildChronicleMapProcessor buildChronicleMapProcessor;
@@ -24,12 +26,7 @@ public class PreProcessorRoute extends RouteBuilder{
 
         this.from("{{inputPath}}"+"?preMove=inprogress&move=./processed/${date:now:yyyyMMdd}/${file:name}&moveFailed=./error/${file:name.noext}-${date:now:yyyyMMddHHmmssSSS}.${file:ext}.failed")//("")
             .routeId("RAW-CSV-INGESTION-STAGING-READER")
-            // .onCompletion()
-            //     .onFailureOnly()
-            //         .to("log:sync")
-            //         .log("Failed to process file named : ${file:name}")
-            //         .end()
-            .onCompletion()        
+            .onCompletion()
                 .onCompleteOnly()
                     .to("log:sync")
                     .log("Successfully processed file named : ${file:name}")
@@ -37,7 +34,8 @@ public class PreProcessorRoute extends RouteBuilder{
             .unmarshal(csvDataFormat)
             .split(this.body())
             .streaming()
-            //.log("Unmarshalled --> ${body}")
+            .process(this.addUuidProcessor)
+//            .log("Unmarshalled --> ${body}")
             .to("sql:{{sqlInsertStmt}}","seda:chronicleMap")
             ;
 

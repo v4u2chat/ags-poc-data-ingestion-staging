@@ -1,5 +1,6 @@
-package com.ags.poc.ingestion.chroniclemap;
+package com.ags.poc.ingestion.camel;
 
+import com.ags.poc.ingestion.chroniclemap.ChronicleMapUpdateTask;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class BuildChronicleMapProcessor implements Processor{
     public void process(final Exchange exchange) throws Exception {
 
         final Map<String,String> payload = exchange.getIn().getBody(Map.class);
-        executor.submit(new ChronicleMapUpdateTask(payload));
+        executor.submit(new ChronicleMapUpdateTask(payload, null));
     }
     
 

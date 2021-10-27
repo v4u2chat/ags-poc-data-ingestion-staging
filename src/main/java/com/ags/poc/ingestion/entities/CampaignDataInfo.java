@@ -1,8 +1,11 @@
 package com.ags.poc.ingestion.entities;
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -13,31 +16,59 @@ public class CampaignDataInfo implements Serializable {
 
 	private static final long serialVersionUID = 8776055445546382163L;
 	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	@Column(name = "ID")
-	private long id;
+	private String id;
+
 	@Column(name = "PRIORITY")
 	private int priority;
+
 	@Column(name = "MAX_DISPLAY_COUNT")
 	private int maxVisitCount;
+
 	@Column(name = "VISITED_COUNT")
 	private int visitedCount;
+
 	@Column(name = "SOURCE_ACCOUNT_NBR")
 	private String nbr;
+
 	@Column(name = "CAMPAIGN_TYPE")
 	private String campaignType;
+
 	@Column(name = "MESSAGE1")
 	private String message1;
+
 	@Column(name = "MESSAGE2")
 	private String message2;
+
 	@Column(name = "MESSAGE3")
 	private String message3;
+
 	@Column(name = "MESSAGE4")
 	private String message4;
+
 	@Column(name = "SOURCE_ACCOUNT_NBR_MD5")
 	private String sourceAccountNbrMd5;
 
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
+	}
+
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public String getSourceAccountNbrMd5() {
+		return this.sourceAccountNbrMd5;
+	}
+
+	public void setSourceAccountNbrMd5(final String sourceAccountNbrMd5) {
+		this.sourceAccountNbrMd5 = sourceAccountNbrMd5;
 	}
 
 	public String getNbr() {

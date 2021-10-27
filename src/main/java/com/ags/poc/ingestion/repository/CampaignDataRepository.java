@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface CampaignDataRepository extends JpaRepository<CampaignDataInfo, Long> {
 
+	CampaignDataInfo findById(String id);
 	List<CampaignDataInfo> findByNbr(String sourceAccountNbr);
 	List<CampaignDataInfo> findBySourceAccountNbrMd5(String sourceAccountNbrMd5);
 }
