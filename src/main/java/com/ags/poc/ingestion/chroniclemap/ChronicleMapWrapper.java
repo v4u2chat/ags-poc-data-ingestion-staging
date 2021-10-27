@@ -1,16 +1,18 @@
 package com.ags.poc.ingestion.chroniclemap;
 
+import com.ags.poc.ingestion.entities.CampaignDataInfo;
+import com.ags.poc.ingestion.utils.PocUtils;
+import net.openhft.chronicle.map.ChronicleMap;
+
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ags.poc.ingestion.utils.PocUtils;
-
-import net.openhft.chronicle.map.ChronicleMap;
-
 public class ChronicleMapWrapper {
     
-    private static ChronicleMapWrapper ourInstance = new ChronicleMapWrapper();
+    private static final ChronicleMapWrapper ourInstance = new ChronicleMapWrapper();
 
     public static synchronized ChronicleMapWrapper getInstance() {
         ourInstance.init();
@@ -23,31 +25,45 @@ public class ChronicleMapWrapper {
     private boolean isInit = false;
     private ChronicleMap<String,List> pMap;
     public synchronized void init(){
-        if (isInit) return;
+        if (this.isInit) {
+            return;
+        }
         try {
 
-            pMap = ChronicleMap
+            this.deleteExistingFileIfAny();
+
+            this.pMap = ChronicleMap
                     .of(String.class, List.class).name("ags-campaign-data-map")
                     .entries(10_000)  //  10 Crores || Hundred Million
                     .averageKey("1234123412341234")
-                    .averageValue(createDummyList())
+                    .averageValue(this.createDummyList())
                     .createOrRecoverPersistedTo(new File(System.getProperty("user.home") + "/ags-campaign-data-map.dat"));
                     
             Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    pMap.close();
+                    ChronicleMapWrapper.this.pMap.close();
+                    ChronicleMapWrapper.this.deleteExistingFileIfAny();
                     System.out.println("ChronicleMap closed gracefully...");
                 }
             }));
-            isInit = true;
-        }catch (Exception e){
+            this.isInit = true;
+        }catch (final Exception e){
             e.printStackTrace();
         }
     }
+
+    private void deleteExistingFileIfAny() {
+        try {
+            Files.deleteIfExists(new File(System.getProperty("user.home") + "/ags-campaign-data-map.dat").toPath());
+        } catch (final IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private List<CampaignDataInfo> createDummyList() {
 
-        List<CampaignDataInfo> dumCampaignDataInfos = new ArrayList<>();
+        final List<CampaignDataInfo> dumCampaignDataInfos = new ArrayList<>();
         dumCampaignDataInfos.add(PocUtils.createDummyCampaignInfo());
         dumCampaignDataInfos.add(PocUtils.createDummyCampaignInfo());
         dumCampaignDataInfos.add(PocUtils.createDummyCampaignInfo());
@@ -58,18 +74,18 @@ public class ChronicleMapWrapper {
 
 
     public void close(){
-        pMap.close();
+        this.pMap.close();
     }
 
 
     public List<CampaignDataInfo> getCampaignDataInfo(final String key){
-        return pMap.get(key);
+        return this.pMap.get(key);
     }
 
     public void addElement(final String key , final CampaignDataInfo campaignDataInfo){
-        List<CampaignDataInfo> campaignDataInfos = pMap.get(key) == null ? new ArrayList<CampaignDataInfo>() : pMap.get(key);
+        final List<CampaignDataInfo> campaignDataInfos = this.pMap.get(key) == null ? new ArrayList<>() : this.pMap.get(key);
 
-        for(CampaignDataInfo campaignDataInfo2 : campaignDataInfos){
+        for(final CampaignDataInfo campaignDataInfo2 : campaignDataInfos){
             if(campaignDataInfo2.getCampaignType().equals(campaignDataInfo.getCampaignType())){
                 campaignDataInfos.remove(campaignDataInfo2);
                 campaignDataInfo.incrementVisitedCount();
@@ -79,21 +95,21 @@ public class ChronicleMapWrapper {
         if(campaignDataInfo.getMaxVisitCount()>campaignDataInfo.getVisitedCount()){
             campaignDataInfos.add(campaignDataInfo);
         }
-        
-        pMap.put(key,campaignDataInfos);
+
+        this.pMap.put(key,campaignDataInfos);
 
         System.out.println("Added "+ campaignDataInfo.getCampaignType()+ " >> "+campaignDataInfos.size() +" to "+ campaignDataInfos);
     }
 
     public boolean exists(final String key){
-        return pMap.containsKey(key);
+        return this.pMap.containsKey(key);
     }
 
     public  List<CampaignDataInfo> getVal(final String key){
-        return pMap.get(key);
+        return this.pMap.get(key);
     }
 
     public int size(){
-        return pMap.size();
+        return this.pMap.size();
     }
 }

@@ -9,15 +9,14 @@ camel:
 noop:
   flag: true
 inputPath: file:/Users/v4u2chat/Dev/data/inbox
-outputPath: file:/Users/v4u2chat/Dev/data/outbox
 
 dbRoute1: jdbc:dataSource
-sqlInsertStmt: INSERT INTO `CompaignData` (`SOURCE_ACCOUNT_NBR`, `PRODUCT_CODE`, `MAX_DISPLAY_COUNT`, `UPLOAD_DATE`, `DELETE_DATE`, `CAMPAIGN_TYPE`, `MESSAGE1`, `MESSAGE2`, `MESSAGE3`, `MESSAGE4`, `PRIORITY`, `ACTION`,`SOURCE_ACCOUNT_NBR_MD5`) VALUES (:#SOURCE_ACCOUNT_NBR, :#PRODUCT_CODE, :#MAX_DISPLAY_COUNT, STR_TO_DATE(:#UPLOAD_DATE,'%d-%m-%Y'),STR_TO_DATE(:#DELETE_DATE,'%d-%m-%Y'), :#CAMPAIGN_TYPE, :#MESSAGE1, :#MESSAGE2, :#MESSAGE3, :#MESSAGE4, :#PRIORITY, :#ACTION, MD5(:#SOURCE_ACCOUNT_NBR));
+sqlInsertStmt: INSERT INTO `CampaignData` (`SOURCE_ACCOUNT_NBR`, `PRODUCT_CODE`, `MAX_DISPLAY_COUNT`, `UPLOAD_DATE`, `DELETE_DATE`, `CAMPAIGN_TYPE`, `MESSAGE1`, `MESSAGE2`, `MESSAGE3`, `MESSAGE4`, `PRIORITY`, `ACTION`,`SOURCE_ACCOUNT_NBR_MD5`) VALUES (:#SOURCE_ACCOUNT_NBR, :#PRODUCT_CODE, :#MAX_DISPLAY_COUNT, STR_TO_DATE(:#UPLOAD_DATE,'%d-%m-%Y'),STR_TO_DATE(:#DELETE_DATE,'%d-%m-%Y'), :#CAMPAIGN_TYPE, :#MESSAGE1, :#MESSAGE2, :#MESSAGE3, :#MESSAGE4, :#PRIORITY, :#ACTION, MD5(:#SOURCE_ACCOUNT_NBR));
 
 spring:
   dataSource:
     driver-class-name: com.mysql.cj.jdbc.Driver #com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ags-data-staging
+    url: jdbc:mysql://localhost:3306/ags-data-poc
     username: root
     password: mysql#123
-    jdbc-url: jdbc:mysql://localhost:3306/ags-data-staging
+    jdbc-url: jdbc:mysql://localhost:3306/ags-data-poc

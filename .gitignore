@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .mvn/
+src/main/lib/
+src/main/web/
+.mvn
